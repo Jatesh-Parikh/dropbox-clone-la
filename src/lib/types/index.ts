@@ -7,10 +7,10 @@ export type TUser = {
 
 export type TFiles = {
 	downloadUrl: string;
-	filename: string;
+	fileName: string;
 	uid: string;
 	type: string;
 	id: string;
 	size: number;
-	timestamp: Date;
+	timestamp: string;
 };

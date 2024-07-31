@@ -6,5 +6,5 @@
 
 <div class="mx-auto max-w-5xl">
 	<DropZone />
-	<DataGrid files={[]} />
+	<DataGrid files={data.files} count={data.count} />
 </div>

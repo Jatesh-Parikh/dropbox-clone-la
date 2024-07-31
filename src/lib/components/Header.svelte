@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Logo from './Logo.svelte';
 	import ToggleMode from './ToggleMode.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import Button from './ui/button/button.svelte';
@@ -7,6 +6,7 @@
 	import { auth } from '$lib/firebaseConfig';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import Nav from './Nav.svelte';
 
 	async function logOut() {
 		await fetch('/', {
@@ -18,9 +18,9 @@
 	}
 </script>
 
-<header class="sticky left-0 top-0 flex items-center justify-between bg-background px-8 py-4">
-	<Logo />
-	<div class="flex items-center gap-4">
+<header class="sticky left-0 top-0 flex items-center justify-between gap-4 bg-background px-8 py-4">
+	<Nav />
+	<div class="ml-auto flex items-center gap-4">
 		<ToggleMode />
 		{#if $page.data.user}
 			<Avatar.Root>

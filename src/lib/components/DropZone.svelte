@@ -1,45 +1,80 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { db, storage } from '$lib/firebaseConfig';
 	import { cn } from '$lib/utils';
+	import { addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
+	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+	import toast from 'svelte-french-toast';
 
 	let isDragging = false;
 	let files: File[] = [];
 	let fileInput: HTMLInputElement;
 	const maxSize = 1024 * 1024 * 10;
+	let uid = $page.data.user.uid;
 
-	const handleDragEnter = () => {
+	function handleDragEnter() {
 		isDragging = true;
-	};
+	}
 
-	const handleDragLeave = () => {
+	function handleDragLeave() {
 		isDragging = false;
-	};
+	}
 
-	const handleDrop = (event: DragEvent) => {};
+	function handleDrop(event: DragEvent) {
+		isDragging = false;
+		if (event.dataTransfer?.files) {
+			const droppedFiles = Array.from(event.dataTransfer?.files);
+			checkFileSizeAndUpload(droppedFiles);
+		}
+	}
 
-	const handleClick = (event: MouseEvent) => {
+	function handleClick(event: MouseEvent) {
 		fileInput.click();
-	};
+	}
+
+	function handleFileSelect() {
+		if (fileInput.files) {
+			const selectedFiles = Array.from(fileInput.files);
+			checkFileSizeAndUpload(selectedFiles);
+		}
+	}
 
 	async function checkFileSizeAndUpload(files: File[]) {
 		const allFilesValid = files.every((file) => {
 			if (file.size > maxSize) {
-				alert(`Error: ${file.name} exceeds 10 MB`);
+				toast.error(`Error: ${file.name} exceeds 10 MB`);
 				return false;
 			}
 			return true;
 		});
 
 		if (allFilesValid) {
-			//
+			await toast.promise(Promise.all(files.map((file) => handleUpload(file))), {
+				loading: 'Uploading...',
+				success: 'Uploaded successfully!',
+				error: 'Could not upload'
+			});
+			await invalidateAll();
 		}
 	}
 
-	const handleFileSelect = () => {
-		if (fileInput.files) {
-			const selectedFiles = Array.from(fileInput.files);
-			checkFileSizeAndUpload(selectedFiles);
-		}
-	};
+	async function handleUpload(file: File) {
+		const docRef = await addDoc(collection(db, 'files'), {
+			uid,
+			fileName: file.name,
+			size: file.size,
+			type: file.type,
+			timestamp: serverTimestamp()
+		});
+
+		const fileRef = ref(storage, `user/${uid}/files/${docRef.id}`);
+		await uploadBytes(fileRef, file);
+		const downloadUrl = await getDownloadURL(fileRef);
+		await updateDoc(docRef, {
+			downloadUrl
+		});
+	}
 </script>
 
 <button

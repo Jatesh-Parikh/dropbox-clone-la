@@ -1,4 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type { TUser } from '$lib/types';
+
 // for information about these interfaces
 declare global {
 	namespace App {
@@ -6,7 +9,9 @@ declare global {
 		interface Locals {
 			userId: string | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			user: TUser;
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}
