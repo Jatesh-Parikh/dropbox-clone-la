@@ -1,4 +1,10 @@
-# create-svelte
+# SvelteKit + Firebase
+
+![dropbox-clone](./dropbox-clone-dark.png)
+
+![dropbox-clone](./dropbox-clone-light.png)
+
+This project is based on a tutorial by [Lawal Adebola](https://www.youtube.com/watch?v=6RhSzX7Ac0k)
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
