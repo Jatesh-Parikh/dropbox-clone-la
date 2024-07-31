@@ -5,18 +5,19 @@ import { browser } from '$app/environment';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: import.meta.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-	authDomain: import.meta.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-	projectId: import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-	storageBucket: import.meta.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-	messagingSenderId: import.meta.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-	appId: import.meta.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+	apiKey: 'AIzaSyB7inY5Fzdug1IVoVb9Cv74Gl9P1wCov1M',
+	authDomain: 'dropbox-clone-c6613.firebaseapp.com',
+	projectId: 'dropbox-clone-c6613',
+	storageBucket: 'dropbox-clone-c6613.appspot.com',
+	messagingSenderId: '485881666525',
+	appId: '1:485881666525:web:b1eac05f5f8adca7b2b434',
 	measurementId: 'G-QVFCS65Y56'
 };
 
